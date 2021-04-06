@@ -6,7 +6,7 @@ clean:
 	rm vm-rootfs.ext4 dist.ext4 module.ko vm-logs.txt || true
 
 superclean: clean
-	+make -C linux-5.10.12 clean
+	+make -C linux clean
 	rm linux-src.target linux.tar.xz rootfs.ext4 vmlinux
 
 module.ko: src/dev.c src/Makefile
@@ -14,15 +14,16 @@ module.ko: src/dev.c src/Makefile
 	cp ./src/dev.ko ./module.ko
 
 vmlinux: linux-src.target .config
-	cp .config ./linux-5.10.12
-	+make -C linux-5.10.12 all
-	cp ./linux-5.10.12/vmlinux .
+	cp .config ./linux
+	+make -C linux all
+	cp ./linux/vmlinux .
 
 linux.tar.xz:
-	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.12.tar.xz -O ./linux.tar.xz
+	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.11.11.tar.xz -O ./linux.tar.xz
 
 linux-src.target: linux.tar.xz
-	tar xvf ./linux.tar.xz 
+	tar xvf ./linux.tar.xz
+	mv linux-5.11.11 linux
 	touch linux-src.target
 
 rootfs.ext4:
