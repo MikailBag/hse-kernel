@@ -1,4 +1,4 @@
-all: vmlinux rootfs.ext4 module.ko
+all: vmlinux
 	echo OK
 
 clean:
@@ -22,8 +22,9 @@ linux.tar.xz:
 	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.11.11.tar.xz -O ./linux.tar.xz
 
 linux-src.target: linux.tar.xz
-	tar xvf ./linux.tar.xz
+	tar xf ./linux.tar.xz
 	mv linux-5.11.11 linux
+	(cd linux && git apply ../patch.diff)
 	touch linux-src.target
 
 rootfs.ext4:
