@@ -2,14 +2,14 @@ all: vmlinux rootfs.ext4 module.ko
 	echo OK
 
 clean:
-	+make -C src clean
+	+make -C module-src clean
 	rm vm-rootfs.ext4 dist.ext4 module.ko vm-logs.txt || true
 
 superclean: clean
 	+make -C linux clean
 	rm linux-src.target linux.tar.xz rootfs.ext4 vmlinux
 
-module.ko: src/dev.c src/Makefile
+module.ko: src/dev.c module-src/Makefile
 	+make -C src all 
 	cp ./src/dev.ko ./module.ko
 
@@ -27,4 +27,5 @@ linux-src.target: linux.tar.xz
 	touch linux-src.target
 
 rootfs.ext4:
-	wget https://s3.amazonaws.com/spec.ccfc.min/img/hello/fsfiles/hello-rootfs.ext4 -O rootfs.ext4
+	#wget https://s3.amazonaws.com/spec.ccfc.min/img/hello/fsfiles/hello-rootfs.ext4 -O rootfs.ext4
+	wget https://storage.googleapis.com/temp-firecracker-data/hello-rootfs.ext4 -O rootfs.ext4

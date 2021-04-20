@@ -1,2 +1,6 @@
 linux
 .vscode
+linux.tar.xz
+module.ko
+rootfs.ext4
+vmlinux
